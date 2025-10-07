@@ -6,7 +6,7 @@
 **Algoritmo:** Random Forest Classifier  
 **Features:** 40 variables (13 categóricas + 27 numéricas)  
 **Performance:**
-- ROC-AUC: 0.XXX
+- ROC-AUC: 0.808
 - Accuracy: 80.3%
 - Recall: 100% (threshold 0.10)
 

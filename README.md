@@ -2,81 +2,140 @@
 
 [![Python](https://img.shields.io/badge/Python-3.12-blue.svg)](https://www.python.org/)
 [![Scikit-learn](https://img.shields.io/badge/Scikit--learn-1.3.0-orange.svg)](https://scikit-learn.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
-> Modelo de Machine Learning para predecir el riesgo de cancelación (churn) en clientes de seguros de carga marítima y terrestre, permitiendo implementar estrategias de retención proactivas.
+> Modelo de Machine Learning que identifica clientes con alto riesgo de cancelación, permitiendo estrategias de retención proactivas.
 
 ---
 
 ## 📊 Resumen Ejecutivo
 
-Este proyecto desarrolla un sistema predictivo que identifica clientes con alto riesgo de cancelación antes de que abandonen la empresa. El modelo analiza 40 variables de comportamiento, facturación y servicio para generar alertas tempranas y recomendaciones de acción.
+Este proyecto predice qué clientes de seguros de carga tienen mayor probabilidad de cancelar su póliza. El modelo analiza 40 variables de comportamiento, facturación y servicio para generar alertas tempranas.
 
-**Resultados Principales:**
-- ✅ **183 clientes** identificados para acción inmediata (niveles crítico y alto)
-- ✅ **100% de recall** con threshold optimizado (detecta todos los churns)
-- ✅ **ROC-AUC: 0.808** - Modelo con capacidad discriminatoria robusta
-- ✅ **$4,947,737,448 COP** en facturación anual en riesgo identificada
-
-**Impacto de Negocio:** El modelo permite priorizar recursos de retención en los clientes correctos, maximizando el ROI de las campañas.
+**Resultados:**
+- ✅ **183 clientes** identificados para acción inmediata
+- ✅ **100% de recall** con threshold optimizado
+- ✅ **$4.947.737.448 COP** en facturación anual en riesgo identificada
 
 ---
 
 ## 🎯 Problema de Negocio
 
-### Contexto
 Las empresas de seguros de carga enfrentan una **tasa de churn del 25% anual**, lo que representa:
 - Pérdida de ingresos recurrentes
-- Alto costo de adquisición de nuevos clientes (5x más caro que retener)
-- Dificultad para identificar señales tempranas de insatisfacción
+- Alto costo de adquisición (5x más caro que retener)
+- Dificultad para identificar señales tempranas
 
-### Objetivo
-Desarrollar un modelo de Machine Learning que:
-1. Identifique clientes con probabilidad de cancelación superior al 70%
-2. Priorice acciones de retención por nivel de riesgo y valor del cliente
-3. Proporcione insights accionables sobre los factores que causan churn
+**Objetivo:** Crear un modelo que identifique clientes en riesgo antes de que cancelen.
 
 ---
 
-## 📈 Resultados Clave
+## 📈 Resultados Principales
 
-### Predicciones Generadas
-Del análisis de **400 clientes activos**, se identificaron:
+### Clientes por Nivel de Riesgo
 
-| Nivel de Riesgo | Clientes | Porcentaje | Acción Recomendada |
-|-----------------|----------|------------|-------------------|
-| 🔴 **Crítico** | 125 | 31.2% | Llamada urgente del gerente + descuento especial |
-| 🟠 **Alto** | 58 | 14.5% | Contacto del ejecutivo + revisión de contrato |
-| 🟡 **Medio** | 90 | 22.5% | Monitoreo y seguimiento proactivo |
-| 🟢 **Bajo** | 127 | 31.8% | Continuar con servicio normal |
+| Nivel | Clientes | % | Acción Recomendada |
+|-------|----------|---|-------------------|
+| 🔴 Crítico | 125 | 31.2% | Llamada gerencial urgente |
+| 🟠 Alto | 58 | 14.5% | Contacto ejecutivo |
+| 🟡 Medio | 90 | 22.5% | Monitoreo proactivo |
+| 🟢 Bajo | 127 | 31.8% | Servicio normal |
 
-### Métricas del Modelo
+### Top 3 Predictores de Churn
 
-**Performance en Test Set:**
-- **Accuracy:** 80.3%
-- **Precision:** 66.7%
-- **Recall:** 42.7% (threshold 0.5) → **100%** (threshold optimizado 0.10)
-- **F1-Score:** 0.52
-- **ROC-AUC:** 0.XXX
+1. **Quejas/Reclamos** (0.396) - Clientes con churn tienen 3x más quejas
+2. **Días sin Actividad** (0.211) - 57% más días inactivos
+3. **Loss Ratio** (0.063) - Siniestralidad >100% indica riesgo
 
-**Trade-off Precision-Recall:**
-- Con threshold 0.50: Detecta 42.7% de churns con 66.7% precisión
-- Con threshold 0.10: Detecta 100% de churns con 26.3% precisión
-- **Decisión:** Usar threshold 0.10 para campañas de bajo costo, 0.50 para campañas premium
+### Performance del Modelo
 
-### Top 3 Factores Predictivos
-
-1. **Número de quejas/reclamos** (correlación: 0.396)
-   - Clientes con churn tienen **3x más quejas** que clientes activos
-   
-2. **Días sin actividad** (correlación: 0.211)
-   - Clientes con churn pasan **57% más días** sin realizar envíos
-   
-3. **Loss Ratio** (correlación: 0.063)
-   - Ratio de siniestralidad superior al 100% indica problemas de rentabilidad
+- **Algoritmo:** Random Forest
+- **ROC-AUC:** 0.808
+- **Recall:** 100% (threshold 0.10)
+- **Precision:** 66.7% (threshold 0.50)
 
 ---
 
 ## 🛠️ Stack Técnico
+Python 3.12
+├── scikit-learn (Random Forest, Logistic Regression, Gradient Boosting)
+├── pandas, numpy (Análisis de datos)
+├── matplotlib, seaborn (Visualización)
+└── Google Colab (Desarrollo)
 
-### Lenguajes y Librerías
+**Proceso:**
+1. Análisis Exploratorio (1,500 clientes históricos)
+2. Feature Engineering (10 variables nuevas creadas)
+3. Entrenamiento de 5 modelos
+4. Optimización de threshold
+5. Predicciones en 400 clientes activos
+
+---
+
+## 📊 Visualizaciones
+
+### Distribución de Churn
+![Distribución](outputs/01_distribucion_churn.png)
+
+### Feature Importance
+![Importancia](outputs/10_feature_importance.png)
+
+### Optimización de Threshold
+![Threshold](outputs/11_threshold_optimization.png)
+
+---
+
+## 📁 Estructura del Proyecto
+Churn-Clientes/
+├── Churn_Prediction_Complete_Analysis.ipynb  # Notebook completo
+├── outputs/                                   # Gráficos y reportes
+├── data/                                      # Descripción de datos
+├── models/                                    # Información de modelos
+└── README.md                                  # Este archivo
+
+---
+
+## 🚀 Cómo Usar
+
+### Ver Resultados (5 min)
+- Navega a `/outputs/` para ver gráficos
+- Lee `resumen_ejecutivo.txt`
+
+### Ver Código (15 min)
+- Abre `Churn_Prediction_Complete_Analysis.ipynb`
+- GitHub muestra automáticamente el código
+
+### Ejecutar (60 min)
+
+**Google Colab:**
+1. Abre el notebook en Colab
+2. Conecta Google Drive
+3. Ejecuta celdas en orden
+
+**Local:**
+```bash
+git clone https://github.com/Estefacervera/Churn-Clientes.git
+cd Churn-Clientes
+pip install -r requirements.txt
+jupyter notebook
+
+
+Implementación:
+
+Fase 1: Piloto con top 20 críticos
+Fase 2: Escalar a todos los críticos
+Fase 3: Automatización y monitoreo continuo
+
+
+🎓 Aprendizajes
+
+Feature Engineering > Algoritmos complejos - Las variables creadas fueron más predictivas que las originales
+Threshold depende del negocio - No hay valor óptimo universal
+Interpretabilidad importa - Random Forest ganó por claridad en feature importance
+
+
+📬 Contacto
+Estefanía Cervera | Data Analyst
+
+🐙 GitHub
+
+⭐ Si este proyecto te resultó útil, dale una estrella en GitHub

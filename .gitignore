@@ -1,0 +1,26 @@
+# Datos sensibles
+data/*.csv
+!data/README.md
+
+# Modelos (archivos grandes)
+models/*.pkl
+!models/README.md
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Entornos
+venv/
+env/
+ENV/
